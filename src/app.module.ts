@@ -8,8 +8,9 @@ import { Movie } from './movies/entities/movie.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: ':memory:',
+      type: 'sqljs',
+      autoSave: false,
+      location: 'database',
       entities: [Movie],
       synchronize: true,
     }),

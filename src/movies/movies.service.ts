@@ -18,7 +18,7 @@ interface CsvMovieRow {
 export class MoviesService implements OnModuleInit {
   constructor(
     @InjectRepository(Movie)
-    private readonly movieRepository: Repository<Movie>,
+    private readonly movieRepository: Repository<Movie>
   ) {}
 
   async onModuleInit(): Promise<void> {
@@ -29,7 +29,7 @@ export class MoviesService implements OnModuleInit {
   private loadMoviesFromCsv(): Promise<Movie[]> {
     return new Promise((resolve, reject) => {
       const movies: Movie[] = [];
-      const filePath = join(process.cwd(), 'src/resources/movielist.csv');
+      const filePath = join(process.cwd(), 'src/resources/Movielist.csv');
 
       createReadStream(filePath)
         .pipe(csv({ separator: ';' }))
