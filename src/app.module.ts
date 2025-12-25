@@ -8,7 +8,6 @@ import { Movie } from './movies/entities/movie.entity';
     TypeOrmModule.forRoot({
       type: 'sqljs',
       autoSave: false,
-      location: 'database',
       entities: [Movie],
       synchronize: true,
     }),
