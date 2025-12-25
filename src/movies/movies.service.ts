@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import csv from 'csv-parser';
@@ -16,14 +16,21 @@ interface CsvMovieRow {
 
 @Injectable()
 export class MoviesService implements OnModuleInit {
+  private readonly logger = new Logger(MoviesService.name);
+
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>
   ) {}
 
   async onModuleInit(): Promise<void> {
+    this.logger.log('Initializing movies database from CSV');
+
     const movies = await this.loadMoviesFromCsv();
     await this.saveMovies(movies);
+
+    const count = await this.movieRepository.count();
+    this.logger.log(`Movies database initialized with ${count} records`);
   }
 
   private loadMoviesFromCsv(): Promise<Movie[]> {
