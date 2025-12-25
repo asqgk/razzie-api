@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
+import { ProducersIntervalsResponseDto } from './dto/producers-intervals-response.dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -11,8 +12,8 @@ export class MoviesController {
     return this.moviesService.findAll();
   }
 
-  @Get('winners')
-  findWinners(): Promise<Movie[]> {
-    return this.moviesService.findWinners();
+  @Get('producers/intervals')
+  async getProducersIntervals(): Promise<ProducersIntervalsResponseDto> {
+    return this.moviesService.getProducersIntervals();
   }
 }
