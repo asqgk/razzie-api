@@ -29,6 +29,14 @@ npm install -g pnpm
 
 ---
 
+## Leitura do CSV
+
+Os dados da aplicação são carregados automaticamente a partir de um arquivo CSV localizado em:
+
+```
+src/resources/Movielist.csv
+```
+
 ## ▶️ Como executar o projeto
 
 ### 1. Instalar dependências
