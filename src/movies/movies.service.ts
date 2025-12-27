@@ -5,8 +5,6 @@ import csv from 'csv-parser';
 import { join } from 'path';
 import { Movie } from './entities/movie.entity';
 import { createReadStream } from 'fs';
-import { ProducerIntervalDto } from './dto/producer-interval.dto';
-import { ProducersIntervalsResponseDto } from './dto/producers-intervals-response.dto';
 
 interface CsvMovieRow {
   year: string;
@@ -78,46 +76,7 @@ export class MoviesService implements OnModuleInit {
     return this.movieRepository.find();
   }
 
-  async getProducersIntervals(): Promise<ProducersIntervalsResponseDto> {
-    this.logger.debug('Calculating producers awards intervals');
-
-    const winners = await this.movieRepository.find({
-      where: { winner: true },
-      order: { year: 'ASC' },
-    });
-
-    const producersMap = new Map<string, number[]>();
-    for (const movie of winners) {
-      const producers = movie.producers.split(/,| and /).map((p) => p.trim());
-
-      for (const producer of producers) {
-        if (!producersMap.has(producer)) {
-          producersMap.set(producer, []);
-        }
-        producersMap.get(producer)!.push(movie.year);
-      }
-    }
-
-    const intervals: ProducerIntervalDto[] = [];
-    for (const [producer, years] of producersMap.entries()) {
-      if (years.length < 2) continue;
-
-      for (let i = 1; i < years.length; i++) {
-        intervals.push({
-          producer,
-          interval: years[i] - years[i - 1],
-          previousWin: years[i - 1],
-          followingWin: years[i],
-        });
-      }
-    }
-
-    const minInterval = Math.min(...intervals.map((i) => i.interval));
-    const maxInterval = Math.max(...intervals.map((i) => i.interval));
-
-    return {
-      min: intervals.filter((i) => i.interval === minInterval),
-      max: intervals.filter((i) => i.interval === maxInterval),
-    };
+  async findWinners(): Promise<Movie[]> {
+    return this.movieRepository.find({ where: { winner: true } });
   }
 }
