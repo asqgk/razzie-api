@@ -29,7 +29,6 @@ export class MoviesService implements OnModuleInit {
     const movies = await this.loadMoviesFromCsv();
     await this.saveMovies(movies);
 
-    const count = await this.movieRepository.count();
     this.logger.debug('Movies database initialization completed');
   }
 
