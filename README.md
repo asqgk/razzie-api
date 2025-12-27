@@ -11,7 +11,7 @@ API RESTful para leitura dos indicados e vencedores da categoria **Pior Filme** 
 - TypeScript
 - TypeORM
 - SQLite (via sqljs, em memória)
-- Jest (testes unitários e e2e)
+- Jest (e2e)
 - pnpm
 
 ---
