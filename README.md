@@ -29,7 +29,7 @@ npm install -g pnpm
 
 ---
 
-## Leitura do CSV
+## 📥 Leitura do CSV
 
 Os dados da aplicação são carregados automaticamente a partir de um arquivo CSV localizado em:
 
